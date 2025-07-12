@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoChain India | Corporate Compliance Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a6d3b;
+            --primary-light: #28a745;
+            --secondary: #0d6efd;
+            --accent: #ffc107;
+            --dark: #212529;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f9fc;
+            padding-top: 80px;
+            color: #333;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        }
+        
+        .stat-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            height: 100%;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            font-weight: 600;
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .nav-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            transform: translateX(5px);
+        }
+        
+        .hero-section {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23e8f5e9" width="50" height="50"/><rect fill="%23e8f5e9" x="50" y="50" width="50" height="50"/></svg>');
+            background-size: 20px 20px;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(26, 109, 59, 0.9), rgba(40, 167, 69, 0.8));
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+        
+        .compliance-chart {
+            height: 300px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .chart-bar {
+            width: 50px;
+            background: var(--primary-light);
+            margin: 0 5px;
+            position: relative;
+            border-radius: 5px 5px 0 0;
+            transition: height 0.5s ease;
+        }
+        
+        .chart-bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .deadline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+        
+        .deadline-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .deadline-urgent {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .deadline-warning {
+            border-left: 4px solid #ffc107;
+        }
+        
+        .deadline-normal {
+            border-left: 4px solid #28a745;
+        }
+        
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 3px;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .state-compliance-card {
+            height: 60%;
+        }
+        
+        footer {
+            margin-top: 50px;
+        }
+        
+        .progress {
+            height: 25px;
+            border-radius: 12px;
+        }
+        
+        .compliance-score {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .compliance-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .compliance-high {
+            background-color: #28a745;
+        }
+        
+        .compliance-medium {
+            background-color: #ffc107;
+        }
+        
+        .compliance-low {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <div class="bg-white rounded-circle p-1 me-2">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjMWE2ZDNiIj48cGF0aCBkPSJNMTIgMkw0IDV2Ni4wOWMwIDUuMDUgMy40MSA5Ljc2IDggMTEuMDUgNC41OS0xLjI5IDgtNS45OTkgOC0xMS4wNVY1TDEyIDJ6Ii8+PC9zdmc+" alt="Logo" width="30" height="30">
+                </div>
+                <span class="fw-bold">EcoChain India</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-section="dashboard">
+                            <i class="fas fa-home"></i> Dashboard
+                            <span class="notification-badge">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="regulations">
+                            <i class="fas fa-file-contract"></i> Regulations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="vendors">
+                            <i class="fas fa-building"></i> Vendors
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="reports">
+                            <i class="fas fa-chart-pie"></i> Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="brsr">
+                            <i class="fas fa-clipboard-check"></i> BRSR
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-outline-light btn-sm" href="#">
+                            <i class="fas fa-user me-1"></i> Account
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-4">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="display-5 fw-bold">Corporate Compliance Hub</h1>
+                <p class="lead">Streamlining environmental compliance for Indian businesses</p>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light">
+                        <i class="fas fa-file-download me-2"></i>Download Report
+                    </button>
+                    <button class="btn btn-outline-light">
+                        <i class="fas fa-video me-2"></i>Schedule Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="section active">
+            <h2 class="mb-4"><i class="fas fa-chart-line me-2 text-success"></i>Compliance Overview</h2>
+            
+            <div class="dashboard-grid">
+                <div class="stat-card bg-white shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-uppercase text-muted small fw-bold">Regulations</h6>
+                                <h3 class="mb-0" id="regulation-count">42</h3>
+                            </div>
+                            <div class="bg-success bg-opacity-10 p-3 rounded-circle">
+                                <i class="fas fa-file-contract fs-3 text-success"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-success fw-bold"><i class="fas fa-arrow-up"></i> 5.2%</span>
+                            <span class="text-muted ms-2">from last month</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-uppercase text-muted small fw-bold">Vendors</h6>
+                                <h3 class="mb-0" id="vendor-count">127</h3>
+                            </div>
+                            <div class="bg-info bg-opacity-10 p-3 rounded-circle">
+                                <i class="fas fa-building fs-3 text-info"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-success fw-bold"><i class="fas fa-arrow-up"></i> 12.7%</span>
+                            <span class="text-muted ms-2">from last month</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-uppercase text-muted small fw-bold">Avg. Score</h6>
+                                <h3 class="mb-0" id="avg-score">82%</h3>
+                            </div>
+                            <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+                                <i class="fas fa-chart-line fs-3 text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-success fw-bold"><i class="fas fa-arrow-up"></i> 3.1%</span>
+                            <span class="text-muted ms-2">from last month</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-uppercase text-muted small fw-bold">At Risk</h6>
+                                <h3 class="mb-0" id="risk-count">18</h3>
+                            </div>
+                            <div class="bg-danger bg-opacity-10 p-3 rounded-circle">
+                                <i class="fas fa-exclamation-triangle fs-3 text-danger"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-danger fw-bold"><i class="fas fa-arrow-down"></i> 2.3%</span>
+                            <span class="text-muted ms-2">from last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Upcoming Deadlines</h5>
+                            <button class="btn btn-sm btn-outline-success">
+                                <i class="fas fa-plus me-1"></i> Add Deadline
+                            </button>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush">
+                                <div class="deadline-item deadline-urgent">
+                                    <div>
+                                        <h6 class="mb-1">Environmental Impact Assessment Report</h6>
+                                        <small class="text-muted">Ministry of Environment, Forest and Climate Change</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold text-danger">Due in 3 days</div>
+                                        <small class="text-muted">15 Jun 2023</small>
+                                    </div>
+                                </div>
+                                <div class="deadline-item deadline-warning">
+                                    <div>
+                                        <h6 class="mb-1">Quarterly Waste Management Report</h6>
+                                        <small class="text-muted">Central Pollution Control Board</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold text-warning">Due in 12 days</div>
+                                        <small class="text-muted">24 Jun 2023</small>
+                                    </div>
+                                </div>
+                                <div class="deadline-item deadline-normal">
+                                    <div>
+                                        <h6 class="mb-1">Annual Energy Consumption Report</h6>
+                                        <small class="text-muted">Bureau of Energy Efficiency</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold text-success">Due in 30 days</div>
+                                        <small class="text-muted">12 Jul 2023</small>
+                                    </div>
+                                </div>
+                                <div class="deadline-item deadline-normal">
+                                    <div>
+                                        <h6 class="mb-1">Water Conservation Compliance</h6>
+                                        <small class="text-muted">Ministry of Water Resources</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold text-success">Due in 45 days</div>
+                                        <small class="text-muted">27 Jul 2023</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Compliance Trend</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="compliance-chart">
+                                <div class="chart-bar" style="height: 70%;">
+                                    <div class="chart-bar-label">Jan</div>
+                                </div>
+                                <div class="chart-bar" style="height: 65%;">
+                                    <div class="chart-bar-label">Feb</div>
+                                </div>
+                                <div class="chart-bar" style="height: 75%;">
+                                    <div class="chart-bar-label">Mar</div>
+                                </div>
+                                <div class="chart-bar" style="height: 80%;">
+                                    <div class="chart-bar-label">Apr</div>
+                                </div>
+                                <div class="chart-bar" style="height: 82%;">
+                                    <div class="chart-bar-label">May</div>
+                                </div>
+                                <div class="chart-bar" style="height: 85%;">
+                                    <div class="chart-bar-label">Jun</div>
+                                </div>
+                                <div class="chart-bar" style="height: 90%;">
+                                    <div class="chart-bar-label">Jul</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card mb-4 state-compliance-card">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Compliance by State</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Maharashtra</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Gujarat</span>
+                                    <span>60%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Tamil Nadu</span>
+                                    <span>45%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Uttar Pradesh</span>
+                                    <span>30%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Karnataka</span>
+                                    <span>68%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" style="width: 68%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Quick Actions</h5>
+                            <i class="fas fa-bolt text-warning"></i>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-success mb-2 text-start">
+                                    <i class="fas fa-file-alt me-2"></i> Generate Compliance Report
+                                </button>
+                                <button class="btn btn-outline-primary mb-2 text-start">
+                                    <i class="fas fa-bell me-2"></i> Setup Deadline Reminders
+                                </button>
+                                <button class="btn btn-outline-warning text-start">
+                                    <i class="fas fa-sync-alt me-2"></i> Refresh Compliance Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regulations Section -->
+        <section id="regulations-section" class="section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-file-contract me-2 text-success"></i>Regulations Management</h2>
+                <button class="btn btn-success" id="show-reg-form">
+                    <i class="fas fa-plus me-2"></i> Add Regulation
+                </button>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Deadline</th>
+                                    <th>Applicable To</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>REG-102</td>
+                                    <td>Plastic Waste Management Rules</td>
+                                    <td>Central</td>
+                                    <td>15 Jun 2023</td>
+                                    <td>Manufacturing, Retail</td>
+                                    <td><span class="badge bg-danger">Urgent</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary action-btn">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success action-btn">
+                                            <i class="fas fa-file-download"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>REG-087</td>
+                                    <td>Water Conservation Guidelines</td>
+                                    <td>State</td>
+                                    <td>30 Jun 2023</td>
+                                    <td>Manufacturing, Textiles</td>
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary action-btn">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success action-btn">
+                                            <i class="fas fa-file-download"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>REG-045</td>
+                                    <td>E-Waste Handling Procedures</td>
+                                    <td>Central</td>
+                                    <td>15 Jul 2023</td>
+                                    <td>IT, Electronics</td>
+                                    <td><span class="badge bg-success">Compliant</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary action-btn">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success action-btn">
+                                            <i class="fas fa-file-download"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>REG-121</td>
+                                    <td>Air Quality Standards</td>
+                                    <td>State</td>
+                                    <td>31 Jul 2023</td>
+                                    <td>Manufacturing, Energy</td>
+                                    <td><span class="badge bg-secondary">Upcoming</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary action-btn">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success action-btn">
+                                            <i class="fas fa-file-download"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav>
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vendors Section -->
+        <section id="vendors-section" class="section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-building me-2 text-success"></i>Vendor Management</h2>
+                <button class="btn btn-success" id="show-vendor-form">
+                    <i class="fas fa-plus me-2"></i> Add Vendor
+                </button>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Search vendors...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option>All Industries</option>
+                        <option>Manufacturing</option>
+                        <option>Textiles</option>
+                        <option>IT Services</option>
+                        <option>Pharmaceuticals</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option>All States</option>
+                        <option>Maharashtra</option>
+                        <option>Gujarat</option>
+                        <option>Tamil Nadu</option>
+                        <option>Karnataka</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Company</th>
+                                    <th>Industry</th>
+                                    <th>State</th>
+                                    <th>Compliance</th>
+                                    <th>BRSR</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>VEN-0451</td>
+                                    <td>GreenTech Solutions</td>
+                                    <td>Manufacturing</td>
+                                    <td>Maharashtra</td>
+                                    <td>
+                                        <div class="compliance-score">92%</div>
+                                        <div class="progress mt-1" style="height: 5px;">
+                                            <div class="progress-bar bg-success" style="width: 92%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-success">Compliant</span></td>
+                                    <td><span class="compliance-indicator compliance-high"></span> Excellent</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary action-btn">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success action-btn">
+                                            <i class="fas fa-chart-line"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>VEN-0782</td>
+                                    <td>EcoFab Textiles</td>
+                                    <td>Textiles</td>
+                                    <td>Gujarat</td>
+                                    <td>
+                                        <div class="compliance-score">75%</div>
+                                        <div class="progress mt-1" style="height: 5px;">
+                                            <div class="progress-bar bg-warning" style="width: 75%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-warning">Partial</span></td>
+                                    <td><span class="compliance-indicator compliance-medium"></span> Moderate</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary action-btn">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success action-btn">
+                                            <i class="fas fa-chart-line"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>VEN-0123</td>
+                                    <td>CleanWater Systems</td>
+                                    <td>Utilities</td>
+                                    <td>Tamil Nadu</td>
+                                    <td>
+                                        <div class="compliance-score">58%</div>
+                                        <div class="progress mt-1" style="height: 5px;">
+                                            <div class="progress-bar bg-danger" style="width: 58%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-danger">Non-compliant</span></td>
+                                    <td><span class="compliance-indicator compliance-low"></span> At Risk</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary action-btn">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success action-btn">
+                                            <i class="fas fa-chart-line"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>VEN-0965</td>
+                                    <td>SolarTech Energy</td>
+                                    <td>Energy</td>
+                                    <td>Karnataka</td>
+                                    <td>
+                                        <div class="compliance-score">87%</div>
+                                        <div class="progress mt-1" style="height: 5px;">
+                                            <div class="progress-bar bg-success" style="width: 87%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-success">Compliant</span></td>
+                                    <td><span class="compliance-indicator compliance-high"></span> Good</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary action-btn">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success action-btn">
+                                            <i class="fas fa-chart-line"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports-section" class="section">
+            <h2 class="mb-4"><i class="fas fa-chart-pie me-2 text-success"></i>Compliance Reports</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="bg-success bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
+                                <i class="fas fa-file-contract fs-2 text-success"></i>
+                            </div>
+                            <h5>Regulatory Compliance</h5>
+                            <p class="text-muted">Detailed analysis of regulation adherence</p>
+                            <button class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Generate Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="bg-info bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
+                                <i class="fas fa-building fs-2 text-info"></i>
+                            </div>
+                            <h5>Vendor Performance</h5>
+                            <p class="text-muted">Vendor compliance scores and trends</p>
+                            <button class="btn btn-outline-info w-100">
+                                <i class="fas fa-download me-2"></i>Generate Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="bg-warning bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
+                                <i class="fas fa-clipboard-check fs-2 text-warning"></i>
+                            </div>
+                            <h5>BRSR Compliance</h5>
+                            <p class="text-muted">SEBI BRSR framework adherence</p>
+                            <button class="btn btn-outline-warning w-100">
+                                <i class="fas fa-download me-2"></i>Generate Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Recent Reports</h5>
+                    <button class="btn btn-sm btn-success">
+                        <i class="fas fa-plus me-1"></i> New Report
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Q1 2023 Environmental Compliance Report</h6>
+                                <small>3 days ago</small>
+                            </div>
+                            <p class="mb-1">Comprehensive analysis of environmental compliance for Q1 2023</p>
+                            <small class="text-muted">Generated by: Admin User</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Vendor Compliance Audit - May 2023</h6>
+                                <small>1 week ago</small>
+                            </div>
+                            <p class="mb-1">Detailed vendor compliance scores and improvement areas</p>
+                            <small class="text-muted">Generated by: Compliance Officer</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Annual BRSR Compliance Report 2022</h6>
+                                <small>2 weeks ago</small>
+                            </div>
+                            <p class="mb-1">SEBI BRSR compliance status for the financial year 2022-23</p>
+                            <small class="text-muted">Generated by: BRSR Team</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRSR Section -->
+        <section id="brsr-section" class="section">
+            <h2 class="mb-4"><i class="fas fa-clipboard-check me-2 text-success"></i>BRSR Compliance Tracker</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Check Vendor Compliance</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Select Vendor</label>
+                                    <select class="form-select">
+                                        <option>GreenTech Solutions</option>
+                                        <option>EcoFab Textiles</option>
+                                        <option>CleanWater Systems</option>
+                                        <option>SolarTech Energy</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Reporting Period</label>
+                                    <select class="form-select">
+                                        <option>Q1 2023 (Jan-Mar)</option>
+                                        <option>Q2 2023 (Apr-Jun)</option>
+                                        <option>Q3 2023 (Jul-Sep)</option>
+                                        <option>Q4 2023 (Oct-Dec)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary w-100">
+                                        <i class="fas fa-search me-2"></i>Check Compliance
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Compliance Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-md-4 text-center">
+                                    <div class="display-4 fw-bold text-success">92%</div>
+                                    <div class="text-muted">Overall Score</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>Environmental Compliance</span>
+                                            <span>95%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" style="width: 95%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>Social Responsibility</span>
+                                            <span>88%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-info" style="width: 88%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>Governance</span>
+                                            <span>93%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-primary" style="width: 93%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i>
+                                This vendor meets SEBI BRSR compliance requirements for the selected period.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">BRSR Compliance Guidelines</h5>
+                        </div>
+                        <div class="card-body brsr-guidelines">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Mandatory for top 1000 listed companies by market capitalization
+                                </li>
+                                <li class="list-group-item bg-transparent">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Reporting required on ESG parameters (Environmental, Social, Governance)
+                                </li>
+                                <li class="list-group-item bg-transparent">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Deadline: March 31st every year
+                                </li>
+                                <li class="list-group-item bg-transparent">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Reporting format prescribed by SEBI
+                                </li>
+                                <li class="list-group-item bg-transparent">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Non-compliance may lead to fines up to ₹25 lakh
+                                </li>
+                            </ul>
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i> 
+                                Refer to SEBI circular SEBI/HO/CFD/CFD-SEC-2/P/CIR/2021/562 for detailed guidelines
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>EcoChain India</h5>
+                    <p>Corporate Sustainability Compliance Platform</p>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-facebook fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2023 EcoChain Compliance Hub. All rights reserved.</p>
+                    <p>Designed for Indian Regulatory Compliance</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Section switching functionality
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links and sections
+                document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = this.getAttribute('data-section') + '-section';
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // Toggle forms
+        document.getElementById('show-reg-form')?.addEventListener('click', function() {
+            const form = document.getElementById('regulation-form');
+            form.classList.toggle('d-none');
+        });
+        
+        document.getElementById('show-vendor-form')?.addEventListener('click', function() {
+            const form = document.getElementById('vendor-form');
+            form.classList.toggle('d-none');
+        });
+        
+        // Add hover effect to stat cards
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+        
+        // BRSR check functionality
+        document.getElementById('check-brsr')?.addEventListener('click', function() {
+            const resultCard = document.getElementById('brsr-result');
+            resultCard.classList.remove('d-none');
+        });
+        
+        // Form submissions
+        document.getElementById('add-regulation-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Regulation added successfully!');
+            this.reset();
+            this.closest('.card').classList.add('d-none');
+        });
+        
+        document.getElementById('add-vendor-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Vendor added successfully!');
+            this.reset();
+            this.closest('.card').classList.add('d-none');
+        });
+        
+        // Quick action buttons
+        document.querySelectorAll('[data-section]').forEach(button => {
+            button.addEventListener('click', function() {
+                const section = this.getAttribute('data-section');
+                
+                // Remove active class from all links and sections
+                document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                
+                // Show corresponding section
+                const sectionId = section + '-section';
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Activate nav link
+                document.querySelector(`.nav-link[data-section="${section}"]`).classList.add('active');
+            });
+        });
+        
+        // Animation for compliance chart bars
+        document.addEventListener('DOMContentLoaded', function() {
+            const bars = document.querySelectorAll('.chart-bar');
+            bars.forEach(bar => {
+                const height = bar.style.height;
+                bar.style.height = '0';
+                setTimeout(() => {
+                    bar.style.height = height;
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>

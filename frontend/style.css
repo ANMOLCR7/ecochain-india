@@ -1,0 +1,118 @@
+:root {
+    --primary: #28a745;
+    --secondary: #20c997;
+    --dark: #343a40;
+    --light: #f8f9fa;
+}
+
+body {
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark);
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    font-weight: 600;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bg-success {
+    background-color: var(--primary) !important;
+}
+
+.btn-success {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.progress {
+    height: 30px;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    font-weight: 500;
+}
+
+#state-compliance .progress {
+    margin-bottom: 15px;
+}
+
+#deadlines-container .list-group-item {
+    border-left: 3px solid var(--primary);
+    margin-bottom: 8px;
+    border-radius: 5px;
+}
+
+#deadlines-container .list-group-item.warning {
+    border-left-color: #ffc107;
+}
+
+#deadlines-container .list-group-item.danger {
+    border-left-color: #dc3545;
+}
+
+.badge-success {
+    background-color: var(--primary);
+}
+
+.badge-warning {
+    background-color: #ffc107;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+}
+
+.compliance-card {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.compliance-card.compliant {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.compliance-card.non-compliant {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+}
+
+.compliance-card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.section-title {
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: inline-block;
+}

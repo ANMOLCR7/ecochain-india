@@ -1,0 +1,18 @@
+# EcoChain India - Report Template
+
+This is a placeholder template file for generating reports.
+In a real implementation, this would be replaced with proper PDF generation logic.
+
+## Report Types Supported:
+- Regulatory Compliance Reports
+- Vendor Performance Reports  
+- BRSR Compliance Reports
+
+## Data Sources:
+- Regulations database
+- Vendors database
+- Compliance scores
+- Audit dates
+- BRSR status
+
+Generated on: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
